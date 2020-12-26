@@ -5,17 +5,22 @@ import {timelinePage} from './styles';
 import {PostItem, PostInput, Header, TopicSelectModal} from '../components';
 
 const Timeline = () => {
-  const [topicModalFlag, setTopicModalFlag] = useState(false);
+  const [topicModalFlag, setTopicModalFlag] = useState(true);
+  const [selectedTopic, setSelectedTopic] = useState(null);
 
   return (
     <SafeAreaView style={timelinePage.container}>
       <View style={timelinePage.container}>
-        <Header onTopicModalSelect={() => setTopicModalFlag(true)} />
+        <Header onTopicModalSelect={() => setTopicModalFlag(true)} title={selectedTopic}/>
         <FlatList data={[]} renderItem={() => null} />
         <PostInput onSendingPost={(value) => console.log(value)} />
         <TopicSelectModal
           visibility={topicModalFlag}
-          onClose={() => setTopicModalFlag(false)}
+          onClose={() => setTopicModalFlag(selectedTopic ? false : true)}
+          onTopicSelect={(value)=>{
+            setSelectedTopic(value);
+            setTopicModalFlag(false);
+          }}
         />
       </View>
     </SafeAreaView>
