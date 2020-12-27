@@ -14,6 +14,7 @@ const Timeline = () => {
   const [selectedTopic, setSelectedTopic] = useState(null);
 
   const selectingTopic = (value) => {
+    database().ref(`/${selectedTopic}/`).off('value');
     setSelectedTopic(value);
     setTopicModalFlag(false);
 
@@ -21,17 +22,20 @@ const Timeline = () => {
       .ref(value)
       .on('value', (snapshot) => {
         const data = snapshot.val();
-        const fomrmattedDate = Object.keys(data).map((key) => ({
-          userEmail: data[key].userEmail,
-          postText: data[key].postText,
-          time: data[key].time,
-        }));
+        if (data) {
+          const fomrmattedDate = Object.keys(data).map((key) => ({
+            userEmail: data[key].userEmail,
+            postText: data[key].postText,
+            time: data[key].time,
+          }));
 
-        fomrmattedDate.sort((a,b) => {
-          return new Date(b.time) - new Date(a.time);
-        })
-        setPostList(fomrmattedDate);
+          fomrmattedDate.sort((a, b) => {
+            return new Date(b.time) - new Date(a.time);
+          });
+          setPostList(fomrmattedDate);
+        }
       });
+    setPostList([]);
   };
 
   const sendingPost = (value) => {
@@ -52,6 +56,7 @@ const Timeline = () => {
         <Header
           onTopicModalSelect={() => setTopicModalFlag(true)}
           title={selectedTopic}
+          onLogOut={() => auth().signOut()}
         />
         <FlatList
           keyExtractor={(_, index) => index.toString()}

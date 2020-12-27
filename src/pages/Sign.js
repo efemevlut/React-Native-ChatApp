@@ -11,27 +11,26 @@ import {
 } from 'react-native';
 import {authStyle} from './styles';
 import {Input, Button} from '../components';
-import auth from '@react-native-firebase/auth'
+import auth from '@react-native-firebase/auth';
 
 const Sign = (props) => {
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
 
   const sign = async () => {
     if (password === repeatPassword) {
       try {
         await auth().createUserWithEmailAndPassword(email, password);
-        Alert.alert("ChatApp", "User Registration Created")
+        Alert.alert('ChatApp', 'User Registration Created');
         props.navigation.goBack();
       } catch (err) {
-        Alert.alert("ChatApp", err.code)
+        Alert.alert('ChatApp', err.code);
       }
     } else {
-      Alert.alert("ChatApp", "Password did not match")
+      Alert.alert('ChatApp', 'Password did not match');
     }
-  }
+  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -45,29 +44,33 @@ const Sign = (props) => {
             <Text>Talk to Everyone</Text>
           </View>
           <View style={{flex: 1}}>
-            <Input 
-              inputProps ={{
-                placeholder: "Type your e-mail address",
-                keyboardType: "email-address"
+            <Input
+              inputProps={{
+                placeholder: 'Type your e-mail address',
+                keyboardType: 'email-address',
               }}
-              onType={value=>setEmail(value)}
+              onType={(value) => setEmail(value)}
             />
-            <Input 
-              inputProps ={{
-                placeholder: "Type your password",
-                secureTextEntry:  true
+            <Input
+              inputProps={{
+                placeholder: 'Type your password',
+                secureTextEntry: true,
               }}
-              onType={value=>setPassword(value)}
+              onType={(value) => setPassword(value)}
             />
-            <Input 
-              inputProps ={{
-                placeholder: "Type your password again",
-                secureTextEntry:  true
+            <Input
+              inputProps={{
+                placeholder: 'Type your password again',
+                secureTextEntry: true,
               }}
-              onType={value=>setRepeatPassword(value)}
+              onType={(value) => setRepeatPassword(value)}
             />
-            <Button title="Create account" onPress={sign}/>
-            <Button title="Cancel" noBorder onPress={()=>props.navigation.goBack()}/>
+            <Button title="Create account" onPress={sign} />
+            <Button
+              title="Cancel"
+              noBorder
+              onPress={() => props.navigation.goBack()}
+            />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
