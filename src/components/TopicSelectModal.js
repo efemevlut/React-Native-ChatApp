@@ -13,13 +13,13 @@ const TopicSelectModal = (props) => {
       style={topicModal.modal}
       onBackdropPress={props.onClose}>
       <View style={topicModal.container}>
+        <Text style={topicModal.topicHeader}>Select a topic</Text>
         {topics.map((topic, index) => {
           return (
             <TouchableOpacity
               key={index}
               style={topicModal.topicItemContainer}
-              onPress={() => props.onTopicSelect(topic)}
-            >
+              onPress={() => props.onTopicSelect(topic)}>
               <Text style={topicModal.topicItemText}>#{topic}</Text>
             </TouchableOpacity>
           );

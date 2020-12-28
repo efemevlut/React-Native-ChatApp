@@ -23,7 +23,6 @@ const Sign = (props) => {
       try {
         await auth().createUserWithEmailAndPassword(email, password);
         Alert.alert('ChatApp', 'User Registration Created');
-        props.navigation.goBack();
       } catch (err) {
         Alert.alert('ChatApp', err.code);
       }

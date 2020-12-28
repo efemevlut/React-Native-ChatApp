@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   SafeAreaView,
-  Dimensions,
   Alert,
   View,
   Text,
@@ -14,19 +13,23 @@ import {authStyle} from './styles';
 import {Input, Button} from '../components';
 import auth from '@react-native-firebase/auth';
 import {resolveAuthError} from '../functions';
+import {ModalContext} from '../Router';
 
 const Login = (props) => {
+  const {setModalFunc} = useContext(ModalContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const login = async () => {
+    setModalFunc(false);
     try {
       if (email === '' || password === '') {
         Alert.alert('ChatApp', 'Auth null value');
       } else {
         await auth().signInWithEmailAndPassword(email, password);
-        Alert.alert("ChatApp", "Login Successfull")
-        props.navigation.navigate("Timeline")
+        await Alert.alert('ChatApp', 'Login Successfull', [
+          {text: 'OK', onPress: () => setModalFunc(true)},
+        ]);
       }
     } catch (error) {
       Alert.alert('ChatApp', resolveAuthError(err.code));

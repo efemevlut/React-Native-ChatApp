@@ -1,22 +1,23 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {SafeAreaView, View, Text, FlatList} from 'react-native';
 import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
 import {authStyle, timelinePage} from './styles';
 import {PostItem, PostInput, Header, TopicSelectModal} from '../components';
 import moment from 'moment';
+import {ModalContext} from '../Router';
 
 const user = auth().currentUser;
 
-const Timeline = () => {
+const Timeline = (props) => {
+  const {topicModalFlag, setModalFunc} = useContext(ModalContext);
   const [postList, setPostList] = useState([]);
-  const [topicModalFlag, setTopicModalFlag] = useState(true);
   const [selectedTopic, setSelectedTopic] = useState(null);
 
   const selectingTopic = (value) => {
     database().ref(`/${selectedTopic}/`).off('value');
     setSelectedTopic(value);
-    setTopicModalFlag(false);
+    setModalFunc(false);
 
     database()
       .ref(value)
@@ -50,13 +51,17 @@ const Timeline = () => {
 
   const renderPost = ({item}) => <PostItem post={item} />;
 
+  const logOut = () => {
+    auth().signOut();
+  };
+
   return (
     <SafeAreaView style={timelinePage.container}>
       <View style={timelinePage.container}>
         <Header
-          onTopicModalSelect={() => setTopicModalFlag(true)}
+          onTopicModalSelect={() => setModalFunc(true)}
           title={selectedTopic}
-          onLogOut={() => auth().signOut()}
+          onLogOut={logOut}
         />
         <FlatList
           keyExtractor={(_, index) => index.toString()}
@@ -66,7 +71,7 @@ const Timeline = () => {
         <PostInput onSendingPost={sendingPost} />
         <TopicSelectModal
           visibility={topicModalFlag}
-          onClose={() => setTopicModalFlag(selectedTopic ? false : true)}
+          onClose={() => setModalFunc(selectedTopic ? false : true)}
           onTopicSelect={selectingTopic}
         />
       </View>
