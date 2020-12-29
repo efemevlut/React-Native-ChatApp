@@ -18,7 +18,7 @@
 ## Overview
 [![](https://freshidea.com/jonah/youtube-api/subscribers-badge.php?label=YouTube&style=for-the-badge&color=red&labelColor=ce4630)](https://www.youtube.com/watch?v=Es-jawWrHYg&feature=youtu.be)
 
-[![overview](http://img.youtube.com/vi/jawWrHYg/0.jpg)](https://www.youtube.com/watch?v=Es-jawWrHYg&feature=youtu.be "ChatApp Overview")
+[![overview](https://i9.ytimg.com/vi/Es-jawWrHYg/mq2.jpg?sqp=CNzuqf8F&rs=AOn4CLC38qFmIqBl2l8GPmvnVMjSZhRhQg)](https://www.youtube.com/watch?v=Es-jawWrHYg&feature=youtu.be "ChatApp Overview")
 
 ### Built With
 
